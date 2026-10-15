@@ -1,0 +1,32 @@
+NUESTRABIBLIO — PUBLICACIÓN EN GITHUB PAGES
+
+ARCHIVOS
+- index.html: aplicación completa. Es el único archivo obligatorio para GitHub Pages.
+- REGLAS_FIRESTORE.txt: referencia privada para revisar las reglas en Firebase (NO subir este archivo al repositorio si le agregas los UID reales).
+
+PASOS
+1. En github.com inicia sesión y crea un repositorio nuevo llamado NuestraBiblio.
+2. Selecciona repositorio Public (GitHub Pages gratuito suele requerir repositorio público).
+3. En el repositorio: Add file > Upload files.
+4. Sube SOLO index.html. Confirma con Commit changes.
+5. Settings > Pages > Build and deployment > Deploy from a branch.
+6. Selecciona main y / (root), luego Save.
+7. Espera unos minutos y abre https://TU_USUARIO.github.io/NuestraBiblio/
+8. En Firebase Console > Authentication > Configuración > Dominios autorizados, agrega TU_USUARIO.github.io si no aparece.
+9. Abre el enlace publicado e inicia sesión con el usuario creado en Firebase.
+10. Revisa que diga Sincronizado. Pulsa Cargar los 127 libros iniciales una sola vez. Comprueba el total.
+11. Abre el mismo enlace en otro dispositivo, inicia sesión con la segunda cuenta y verifica que aparezcan los libros.
+12. Prueba agregar un libro y verlo desde el otro dispositivo.
+
+SEGURIDAD
+- El código web y firebaseConfig son públicos al publicarse en GitHub Pages. Eso es normal; no pongas contraseñas en index.html.
+- Los datos están protegidos por las reglas Firestore basadas en los dos UID autorizados.
+- Asegúrate de que las reglas publicadas permiten /libros/{libroId}, NO /libraries/{libraryId}/books/{bookId}.
+- Guarda una copia Excel antes de importar y periódicamente después.
+- La app requiere internet para sincronizar y no está probada contra tu proyecto Firebase desde aquí.
+- Si ves permission-denied, revisa las reglas y los UID, y que se trate del mismo proyecto.
+
+DOCUMENTACIÓN OFICIAL
+https://docs.github.com/es/pages/getting-started-with-github-pages/creating-a-github-pages-site
+https://firebase.google.com/docs/firestore/security/get-started?hl=es
+https://firebase.google.com/docs/auth/web/password-auth?hl=es
