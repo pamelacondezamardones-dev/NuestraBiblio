@@ -4,67 +4,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NuestraBiblio</title>
+<title>NuestraBiblio ✦</title>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font:15px system-ui,sans-serif;color:#303248;background:linear-gradient(130deg,#fff0fa,#eff4ff,#fff7e8);min-height:100vh}
-main{max-width:1200px;margin:auto;padding:25px 18px}
+main{max-width:1200px;margin:auto;padding:22px 16px}
 h1,h2,h3{font-family:Georgia,serif}
-h1{font-size:clamp(38px,6vw,62px);margin:10px 0;color:#57367a}
-h2{font-size:26px}
-header{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
-.muted{color:#73798b}
+h1{font-size:clamp(36px,6vw,60px);color:#57367a;margin:8px 0}
+h2{font-size:25px}
+.muted{color:#697084}
 .eyebrow{font-size:12px;letter-spacing:2px;color:#c52b91;font-weight:800}
-.actions,.toolbar,.filters,.chips,.bottom{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-button,.upload{font:inherit;background:white;border:1px solid #e4dbe9;border-radius:12px;padding:12px 15px;cursor:pointer;color:#303248}
+header,.actions,.toolbar,.filters,.chips,.bottom,.status,.tabs{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+header,.bottom{justify-content:space-between}
+button,.upload{font:inherit;background:white;border:1px solid #e4dbe9;border-radius:12px;padding:10px 13px;cursor:pointer;color:#303248}
 button:hover,.upload:hover{border-color:#a32bc9}
 button:disabled{opacity:.5;cursor:wait}
-.primary{background:#9228d3;color:white;border-color:#9228d3}
+.primary,.active{background:#9228d3!important;color:white!important;border-color:#9228d3!important}
 .danger{background:#fff0f2;color:#aa1749;border-color:#e8a6b7}
-input,select,textarea{width:100%;padding:12px;border:1px solid #ded8e4;border-radius:10px;font:inherit;background:white}
-.panel,.stat,.book,.daily{background:white;border:1px solid #e8dce9;border-radius:18px;padding:20px}
-.panel{margin:20px 0}
-.hidden{display:none!important}
-.daily{margin:24px 0;background:linear-gradient(120deg,#fce2f2,#e7e6ff,#e1f9f0);padding:28px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #ded8e4;border-radius:10px;font:inherit;background:white}
+input[type=checkbox]{width:auto}
+.panel,.stat,.book,.daily{background:white;border:1px solid #e8dce9;border-radius:18px;padding:19px}
+.panel,.daily{margin:17px 0}
+.daily{background:linear-gradient(120deg,#fce2f2,#e7e6ff,#e1f9f0);padding:25px}
 .daily small{color:#a12680;letter-spacing:2px;font-weight:800}
-.daily h2{font-size:clamp(27px,5vw,38px);margin:12px 0}
-.daily p{line-height:1.6}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
-.stat b{display:block;font:36px Georgia,serif;margin-top:8px}
-.filters{display:grid;grid-template-columns:2fr 1fr 1fr;margin:20px 0}
-.chips{margin:20px 0}
-.chip{border-radius:30px;padding:9px 13px}
-.chip.active{background:#9228d3;color:white}
+.daily h2{font-size:clamp(25px,5vw,36px);margin:10px 0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+.stat b{display:block;font:31px Georgia,serif;margin-top:7px}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr;margin:18px 0}
+.chip{border-radius:30px}
 .genre{background:white;border:1px solid #e8dce9;border-radius:19px;overflow:hidden;margin:15px 0}
-.genre summary{cursor:pointer;padding:20px;color:white;background:linear-gradient(110deg,var(--a),var(--b));font:25px Georgia,serif}
+.genre summary{cursor:pointer;padding:19px;color:white;background:linear-gradient(110deg,var(--a),var(--b));font:24px Georgia,serif}
 .genre summary small{font:13px system-ui;display:block;margin-top:6px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:16px;padding:18px;background:#fffafd}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:15px;padding:16px;background:#fffafd}
 .book{padding:0;overflow:hidden}
-.cover{background:linear-gradient(130deg,var(--a),#354061);color:white;min-height:115px;display:grid;place-items:center;text-align:center;padding:18px;font:21px Georgia,serif}
-.info{padding:15px}
-.info h3{font-size:20px;margin:7px 0}
+.cover{background:linear-gradient(130deg,var(--a),#354061);color:white;height:170px;display:grid;place-items:center;text-align:center;padding:18px;font:21px Georgia,serif}
+.cover img{width:100%;height:100%;object-fit:contain;background:#f5f0fa}
+.info{padding:14px}
+.info h3{font-size:19px;margin:7px 0}
 .info p{overflow-wrap:anywhere}
 .review{font-size:13px;color:#657084}
-.bottom{justify-content:space-between;margin-top:15px}
-.small{padding:7px 10px;font-size:12px}
+.small{padding:7px 9px;font-size:12px}
 .tag{font-size:11px;color:#b32b95;text-transform:uppercase;font-weight:bold}
-.status{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .dot{width:10px;height:10px;background:#dfa42c;border-radius:50%}
 .dot.ok{background:#16a67c}
 .dot.err{background:#dc4162}
-dialog{border:0;border-radius:18px;padding:25px;width:min(550px,95vw);box-shadow:0 20px 80px #0004}
+.hidden{display:none!important}
+dialog{border:0;border-radius:18px;padding:22px;width:min(650px,96vw);max-height:90vh;overflow:auto;box-shadow:0 20px 80px #0004}
 dialog::backdrop{background:#18203599}
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fields label{font-size:12px;font-weight:700}
 .fields input,.fields textarea,.fields select{margin-top:5px}
 .wide{grid-column:1/-1}
 .modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
-@media(max-width:650px){
-.filters{grid-template-columns:1fr}
+.tabs{margin:20px 0}
+.tabs button{font-weight:700}
+.section{display:none}
+.section.show{display:block}
+.listitem{background:white;border:1px solid #e8dce9;border-radius:13px;padding:14px;margin:10px 0}
+.listitem p{margin:5px 0}
+.progress{height:12px;background:#ede7f3;border-radius:30px;overflow:hidden}
+.progress>span{display:block;background:#9b39d6;height:100%}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.pill{display:inline-block;border-radius:20px;background:#f3e9fc;padding:4px 9px;font-size:12px}
+.hint{font-size:12px;color:#74788a}
+.scroll{overflow:auto}
+.minirow{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.bar{display:flex;align-items:center;gap:8px;margin:7px 0}
+.bar label{width:125px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .progress{flex:1}
+@media(max-width:700px){
 .stats{grid-template-columns:1fr 1fr}
-.fields{grid-template-columns:1fr}
+.filters,.two,.fields{grid-template-columns:1fr}
 .wide{grid-column:auto}
+.cover{height:150px}
 }
 </style>
 </head>
@@ -87,7 +100,6 @@ dialog::backdrop{background:#18203599}
 
 <section id="authPanel" class="panel">
 <h2>🔐 Biblioteca familiar compartida</h2>
-<p>Ingresa con tu cuenta autorizada de Firebase.</p>
 <div id="loginArea">
 <div class="fields">
 <label>Correo electrónico
@@ -100,8 +112,8 @@ dialog::backdrop{background:#18203599}
 <p><button id="login" class="primary">Iniciar sesión</button></p>
 </div>
 <div id="sessionArea" class="hidden">
-<p id="userLabel"></p>
-<button id="logout">Cerrar sesión</button>
+<span id="userLabel"></span>
+<button id="logout" class="small">Cerrar sesión</button>
 </div>
 <p id="authMsg" class="muted"></p>
 </section>
@@ -112,23 +124,37 @@ dialog::backdrop{background:#18203599}
 <span id="syncDot" class="dot"></span>
 <span id="syncStatus">Conectando...</span>
 </div>
-<div class="toolbar" style="margin-top:15px">
-<button id="clearAll" class="danger">🗑 Limpiar base de datos</button>
+<div class="toolbar" style="margin-top:12px">
+<button id="clearAll" class="danger">🗑 Limpiar catálogo de libros</button>
+<span class="hint">Borra solo la colección de libros, no los registros personales, préstamos ni deseos.</span>
 </div>
 </section>
 
+<nav class="tabs" id="tabs">
+<button class="active" data-tab="catalog">📚 Catálogo</button>
+<button data-tab="reading">📖 Mi rincón</button>
+<button data-tab="quotes">✍️ Mis frases</button>
+<button data-tab="opinions">⭐ Opiniones</button>
+<button data-tab="loans">🤝 Préstamos</button>
+<button data-tab="wishes">🛍️ Por comprar</button>
+<button data-tab="stats">📊 Estadísticas</button>
+</nav>
+
+<section id="catalog" class="section show">
 <section class="daily">
 <small>✦ LIBRO DESTACADO DEL DÍA</small>
 <h2 id="dailyTitle">Cargando...</h2>
 <p id="dailyAuthor"></p>
 <p id="dailyReview"></p>
+<button id="surprise" class="primary">🎲 Sorpréndeme con otro libro</button>
 </section>
 
-<section class="stats">
+<div class="stats">
 <div class="stat">Libros registrados<b id="total">0</b></div>
-<div class="stat">Géneros diferentes<b id="countGenres">0</b></div>
-<div class="stat">Autores diferentes<b id="countAuthors">0</b></div>
-</section>
+<div class="stat">Géneros<b id="countGenres">0</b></div>
+<div class="stat">Autores<b id="countAuthors">0</b></div>
+<div class="stat">Sin leer por mí<b id="unread">0</b></div>
+</div>
 
 <h2>Explora tu colección</h2>
 <div class="filters">
@@ -142,7 +168,120 @@ dialog::backdrop{background:#18203599}
 </div>
 <div id="chips" class="chips"></div>
 <div id="grid"></div>
-<p class="muted">Tu catálogo está sincronizado con Firebase.</p>
+</section>
+
+<section id="reading" class="section">
+<h2>📖 Mi rincón de lectura</h2>
+<p class="muted">Tu progreso es personal. Solo tú puedes editarlo.</p>
+<div class="panel">
+<div class="fields">
+<label>Libro<select id="readBook"></select></label>
+<label>Estado
+<select id="readState">
+<option>Pendiente</option>
+<option>En lectura</option>
+<option>Leído</option>
+</select>
+</label>
+<label>Página actual
+<input id="readPage" type="number" min="0" value="0">
+</label>
+<label>Total de páginas
+<input id="readTotal" type="number" min="0" value="0">
+</label>
+<label>Fecha de inicio<input id="readStart" type="date"></label>
+<label>Fecha de término<input id="readEnd" type="date"></label>
+</div>
+<p><button id="saveReading" class="primary">Guardar progreso</button></p>
+</div>
+<div id="readingList"></div>
+
+<h3>🏆 Desafío lector familiar</h3>
+<div class="panel">
+<label>Mi meta anual (libros terminados)
+<input id="goal" type="number" min="1" max="500" value="12">
+</label>
+<p><button id="saveGoal">Guardar meta</button></p>
+<div id="challenge"></div>
+</div>
+</section>
+
+<section id="quotes" class="section">
+<h2>✍️ Frases que quiero recordar</h2>
+<div class="panel">
+<div class="fields">
+<label>Libro<select id="quoteBook"></select></label>
+<label>Página<input id="quotePage" maxlength="30"></label>
+<label class="wide">Frase
+<textarea id="quoteText" rows="3" maxlength="1500"></textarea>
+</label>
+<label class="wide">Mi reflexión
+<textarea id="quoteNote" rows="2" maxlength="1500"></textarea>
+</label>
+</div>
+<p><button id="saveQuote" class="primary">Guardar frase</button></p>
+</div>
+<div id="quoteList"></div>
+</section>
+
+<section id="opinions" class="section">
+<h2>⭐ Nuestras opiniones</h2>
+<div class="panel">
+<div class="fields">
+<label>Libro<select id="opBook"></select></label>
+<label>Mi calificación
+<select id="opRating">
+<option value="">Sin calificar</option>
+<option value="1">⭐ 1</option>
+<option value="2">⭐⭐ 2</option>
+<option value="3">⭐⭐⭐ 3</option>
+<option value="4">⭐⭐⭐⭐ 4</option>
+<option value="5">⭐⭐⭐⭐⭐ 5</option>
+</select>
+</label>
+<label class="wide">Mi opinión
+<textarea id="opText" rows="3" maxlength="2000"></textarea>
+</label>
+</div>
+<p><button id="saveOpinion" class="primary">Guardar mi opinión</button></p>
+</div>
+<div id="opinionList"></div>
+</section>
+
+<section id="loans" class="section">
+<h2>🤝 Registro de préstamos</h2>
+<div class="panel">
+<div class="fields">
+<label>Libro<select id="loanBook"></select></label>
+<label>Prestado a<input id="loanTo" maxlength="120"></label>
+<label>Fecha del préstamo<input id="loanDate" type="date"></label>
+<label>Devolución prevista<input id="loanDue" type="date"></label>
+</div>
+<p><button id="saveLoan" class="primary">Registrar préstamo</button></p>
+</div>
+<div id="loanList"></div>
+</section>
+
+<section id="wishes" class="section">
+<h2>🛍️ Libros que queremos comprar</h2>
+<div class="panel">
+<div class="fields">
+<label>Título<input id="wishTitle" maxlength="250"></label>
+<label>Autor/a<input id="wishAuthor" maxlength="250"></label>
+<label class="wide">Nota / dónde comprar
+<input id="wishNote" maxlength="500">
+</label>
+</div>
+<p><button id="saveWish" class="primary">Agregar a deseos</button></p>
+</div>
+<div id="wishList"></div>
+</section>
+
+<section id="stats" class="section">
+<h2>📊 Estadísticas y curiosidades</h2>
+<div id="statsContent"></div>
+</section>
+
 </div>
 </main>
 
@@ -161,7 +300,9 @@ dialog::backdrop{background:#18203599}
 <label>Editorial<input name="Editorial"></label>
 <label>Año edición<input name="Año edición"></label>
 <label>ISBN<input name="ISBN"></label>
-<label>Ubicación<input name="Ubicación"></label>
+<label>Ubicación
+<input name="Ubicación" placeholder="Ej. Sala, estante 2">
+</label>
 <label>Estado lectura
 <select name="Estado lectura">
 <option value="">Sin registrar</option>
@@ -173,9 +314,15 @@ dialog::backdrop{background:#18203599}
 <label>Calificación (1-5)
 <select name="Calificación (1-5)">
 <option value="">Sin calificar</option>
-<option>1</option><option>2</option><option>3</option>
-<option>4</option><option>5</option>
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+<option>5</option>
 </select>
+</label>
+<label class="wide">URL de portada (https://...)
+<input name="Portada URL" type="url" placeholder="https://...">
 </label>
 <label class="wide">Reseña breve (máximo 60 caracteres)
 <textarea name="Reseña" maxlength="60" rows="2"></textarea>
@@ -194,336 +341,1423 @@ dialog::backdrop{background:#18203599}
 <script type="module">
 import {initializeApp} from
 "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+
 import {
-getAuth,onAuthStateChanged,signInWithEmailAndPassword,signOut
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
 import {
-getFirestore,collection,doc,onSnapshot,setDoc,deleteDoc,
-writeBatch,serverTimestamp
+  getFirestore,
+  collection,
+  doc,
+  onSnapshot,
+  setDoc,
+  deleteDoc,
+  writeBatch,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-const firebaseConfig={
-apiKey:"AIzaSyBRNaIMDZRfxbncEyuQXO0G8FD-4l5RGcA",
-authDomain:"nuestra-biblioteca-b6b18.firebaseapp.com",
-projectId:"nuestra-biblioteca-b6b18",
-storageBucket:"nuestra-biblioteca-b6b18.firebasestorage.app",
-messagingSenderId:"895558928041",
-appId:"1:895558928041:web:eacb2e877c45e05db48bb8",
-measurementId:"G-9S013X4R1D"
+// CONFIGURACIÓN ORIGINAL DE NUESTRABIBLIO
+const firebaseConfig = {
+  apiKey: "AIzaSyBRNaIMDZRfxbncEyuQXO0G8FD-4l5RGcA",
+  authDomain: "nuestra-biblioteca-b6b18.firebaseapp.com",
+  projectId: "nuestra-biblioteca-b6b18",
+  storageBucket: "nuestra-biblioteca-b6b18.firebasestorage.app",
+  messagingSenderId: "895558928041",
+  appId: "1:895558928041:web:eacb2e877c45e05db48bb8",
+  measurementId: "G-9S013X4R1D"
 };
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
-const $=s=>document.querySelector(s);
-const booksRef=collection(db,"libros");
-const fields=[
-"ID","Título","Autor/a","Género / tema","Editorial",
-"Año edición","ISBN","Ubicación","Estado lectura",
-"Calificación (1-5)","Observaciones","Reseña"
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const $ = selector => document.querySelector(selector);
+
+const booksRef = collection(db, "libros");
+
+const fields = [
+  "ID", "Título", "Autor/a", "Género / tema",
+  "Editorial", "Año edición", "ISBN",
+  "Ubicación", "Estado lectura",
+  "Calificación (1-5)", "Observaciones",
+  "Reseña", "Portada URL"
 ];
-const palette=[
-["#e9338e","#a724d5"],["#ff8b30","#e94364"],
-["#12a8cb","#2564dc"],["#1dbd91","#0e8e9e"],
-["#a66af3","#6643c7"],["#e8a019","#e35443"]
+
+const palette = [
+  ["#e9338e","#a724d5"],
+  ["#ff8b30","#e94364"],
+  ["#12a8cb","#2564dc"],
+  ["#1dbd91","#0e8e9e"],
+  ["#a66af3","#6643c7"],
+  ["#e8a019","#e35443"]
 ];
 
-let books=[],ready=false,editing=null,unsubscribe=null;
-let lastDay="";
-const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({
-"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-}[c]));
-const norm=b=>{
-const o={};
-for(const f of fields)o[f]=String(b[f]??"").trim();
-o.Reseña=o.Reseña.slice(0,60);
-return o;
-};
-const key=b=>(b["Título"]+"|"+b["Autor/a"]).trim().toLocaleLowerCase("es");
-const newId=()=> "book-"+crypto.randomUUID();
-const bookRef=id=>doc(db,"libros",id);
-const status=(msg,ok="")=>{
-$("#syncStatus").textContent=msg;
-$("#syncDot").className="dot "+ok;
-};
-const genres=()=>[...new Set(books.map(b=>b["Género / tema"]||"Sin género"))]
-.sort((a,b)=>a.localeCompare(b,"es"));
+let books = [];
+let readings = [];
+let quotes = [];
+let opinions = [];
+let loans = [];
+let wishes = [];
+let goals = [];
 
-function chileDate(){
-return new Intl.DateTimeFormat("en-CA",{
-timeZone:"America/Santiago",year:"numeric",month:"2-digit",day:"2-digit"
-}).format(new Date());
-}
+let ready = false;
+let editing = null;
+let unsubscribe = [];
+let currentUser = null;
+let selectedTab = "catalog";
 
-function dailyBook(){
-const day=chileDate();
-lastDay=day;
-if(!books.length){
-$("#dailyTitle").textContent="Tu próxima lectura te espera";
-$("#dailyAuthor").textContent="";
-$("#dailyReview").textContent="Agrega libros para descubrir uno cada día.";
-return;
-}
-const ordered=[...books].sort((a,b)=>a._id.localeCompare(b._id));
-let hash=0;
-for(const c of day)hash=(Math.imul(hash,31)+c.charCodeAt(0))|0;
-const b=ordered[(hash>>>0)%ordered.length];
-$("#dailyTitle").textContent=b["Título"]||"Sin título";
-$("#dailyAuthor").textContent=b["Autor/a"]||"Autor no registrado";
-$("#dailyReview").textContent=b["Reseña"]||
-"Este libro aún no tiene una reseña. Puedes agregarla al editarlo.";
-}
-
-function render(){
-dailyBook();
-const gs=genres();
-const previous=$("#genre").value;
-$("#total").textContent=books.length;
-$("#countGenres").textContent=gs.length;
-$("#countAuthors").textContent=new Set(books.map(b=>b["Autor/a"]).filter(Boolean)).size;
-
-$("#genre").innerHTML='<option value="">Todos los géneros</option>'+
-gs.map(g=>`<option value="${esc(g)}">${esc(g)}</option>`).join("");
-$("#genre").value=gs.includes(previous)?previous:"";
-$("#genreList").innerHTML=gs.map(g=>`<option value="${esc(g)}">`).join("");
-
-const chosen=$("#genre").value;
-$("#chips").innerHTML=["Todos",...gs].map((g,i)=>{
-const v=i?g:"";
-return `<button class="chip ${chosen===v?"active":""}"
-data-genre="${esc(v)}">${esc(g)}</button>`;
-}).join("");
-
-const q=$("#search").value.toLocaleLowerCase("es");
-const visible=books.filter(b=>
-(!chosen||(b["Género / tema"]||"Sin género")===chosen)&&
-[b["Título"],b["Autor/a"],b["Género / tema"]]
-.join(" ").toLocaleLowerCase("es").includes(q)
+const esc = value => String(value ?? "").replace(
+  /[&<>"']/g,
+  char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[char])
 );
-const sortField={
-title:"Título",author:"Autor/a",genre:"Género / tema"
-}[$("#sort").value];
-visible.sort((a,b)=>String(a[sortField]||"")
-.localeCompare(String(b[sortField]||""),"es"));
 
-$("#grid").innerHTML=visible.length?
-gs.filter(g=>!chosen||g===chosen).map(g=>{
-const arr=visible.filter(b=>(b["Género / tema"]||"Sin género")===g);
-if(!arr.length)return "";
-const c=palette[gs.indexOf(g)%palette.length];
-return `<details class="genre" style="--a:${c[0]};--b:${c[1]}"
-${chosen||q?"open":""}>
-<summary>📚 ${esc(g)}<small>${arr.length} libros · Toca para desplegar</small></summary>
-<div class="grid">${arr.map(b=>`
-<article class="book">
-<div class="cover" style="--a:${c[0]}">${esc(b["Título"])}</div>
-<div class="info">
-<span class="tag">${esc(g)}</span>
-<h3>${esc(b["Título"])}</h3>
-<p>${esc(b["Autor/a"]||"Autor desconocido")}</p>
-<p class="review">${esc(b["Reseña"]||"")}</p>
-<div class="bottom">
-<span class="muted">${esc(b["Estado lectura"]||"")}</span>
-<div>
-<button class="small" data-edit="${esc(b._id)}">Editar</button>
-<button class="small" data-delete="${esc(b._id)}">×</button>
-</div></div></div></article>`).join("")}</div></details>`;
-}).join(""):'<div class="panel">No hay libros para mostrar.</div>';
+const norm = book => {
+  const result = {};
+  for (const field of fields) {
+    result[field] = String(book[field] ?? "").trim();
+  }
+  result.Reseña = result.Reseña.slice(0,60);
+  return result;
+};
+
+const key = book => (
+  (book["Título"] || "") + "|" +
+  (book["Autor/a"] || "")
+).trim().toLocaleLowerCase("es");
+
+const newId = () => "book-" + crypto.randomUUID();
+const bookRef = id => doc(db, "libros", id);
+
+function status(message, state = "") {
+  $("#syncStatus").textContent = message;
+  $("#syncDot").className = "dot " + state;
 }
 
-function listen(){
-if(unsubscribe)unsubscribe();
-ready=false;
-status("Conectando...");
-unsubscribe=onSnapshot(booksRef,snapshot=>{
-books=snapshot.docs.map(d=>({...d.data(),_id:d.id}));
-ready=true;
-status("Sincronizado · "+books.length+" libros","ok");
-render();
-},err=>{
-ready=false;
-status("Error de sincronización: "+err.message,"err");
+function chileDate() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "America/Santiago",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
+}
+
+function genres() {
+  return [...new Set(
+    books.map(b => b["Género / tema"] || "Sin género")
+  )].sort((a,b) => a.localeCompare(b,"es"));
+}
+
+function bookName(id) {
+  const b = books.find(x => x._id === id);
+  return b ? b["Título"] : "Libro no disponible";
+}
+
+function myReadings() {
+  return readings.filter(r => r.uid === currentUser?.uid);
+}
+
+function myQuotes() {
+  return quotes.filter(r => r.uid === currentUser?.uid);
+}
+
+function myOpinions() {
+  return opinions.filter(r => r.uid === currentUser?.uid);
+}
+
+function myGoal() {
+  return goals.find(g =>
+    g.uid === currentUser?.uid &&
+    String(g.year) === String(new Date().getFullYear())
+  );
+}
+
+// LIBRO DESTACADO DEL DÍA
+function dailyBook() {
+  if (!books.length) {
+    $("#dailyTitle").textContent =
+      "Tu próxima lectura te espera";
+    $("#dailyAuthor").textContent = "";
+    $("#dailyReview").textContent =
+      "Agrega libros para descubrir uno cada día.";
+    return;
+  }
+
+  const ordered = [...books].sort(
+    (a,b) => a._id.localeCompare(b._id)
+  );
+
+  const day = chileDate();
+  let hash = 0;
+
+  for (const char of day) {
+    hash = (
+      Math.imul(hash,31) + char.charCodeAt(0)
+    ) | 0;
+  }
+
+  const selected = ordered[(hash >>> 0) % ordered.length];
+  showFeatured(selected);
+}
+
+function showFeatured(book) {
+  $("#dailyTitle").textContent =
+    book["Título"] || "Sin título";
+
+  $("#dailyAuthor").textContent =
+    book["Autor/a"] || "Autor no registrado";
+
+  $("#dailyReview").textContent =
+    book["Reseña"] ||
+    "Este libro todavía no tiene reseña.";
+}
+
+$("#surprise").onclick = () => {
+  if (!books.length) {
+    alert("Todavía no hay libros en tu biblioteca.");
+    return;
+  }
+
+  const current = $("#dailyTitle").textContent;
+
+  const candidates = books.filter(
+    b => b["Título"] !== current
+  );
+
+  const available = candidates.length
+    ? candidates
+    : books;
+
+  const random = available[
+    Math.floor(Math.random() * available.length)
+  ];
+
+  showFeatured(random);
+};
+
+// NAVEGACIÓN POR PESTAÑAS
+$("#tabs").onclick = event => {
+  const button = event.target.closest("[data-tab]");
+  if (!button) return;
+
+  selectedTab = button.dataset.tab;
+
+  document.querySelectorAll("#tabs button").forEach(b => {
+    b.classList.toggle(
+      "active",
+      b.dataset.tab === selectedTab
+    );
+  });
+
+  document.querySelectorAll(".section").forEach(section => {
+    section.classList.toggle(
+      "show",
+      section.id === selectedTab
+    );
+  });
+
+  render();
+};
+
+// VISUALIZACIÓN DEL CATÁLOGO
+function renderCatalog() {
+  const gs = genres();
+  const previous = $("#genre").value;
+
+  $("#total").textContent = books.length;
+  $("#countGenres").textContent = gs.length;
+
+  $("#countAuthors").textContent = new Set(
+    books.map(b => b["Autor/a"]).filter(Boolean)
+  ).size;
+
+  const readIds = new Set(
+    myReadings()
+      .filter(r => r.state === "Leído")
+      .map(r => r.bookId)
+  );
+
+  $("#unread").textContent = books.filter(
+    b => !readIds.has(b._id)
+  ).length;
+
+  $("#genre").innerHTML =
+    '<option value="">Todos los géneros</option>' +
+    gs.map(g =>
+      `<option value="${esc(g)}">${esc(g)}</option>`
+    ).join("");
+
+  $("#genre").value = gs.includes(previous)
+    ? previous
+    : "";
+
+  $("#genreList").innerHTML = gs.map(g =>
+    `<option value="${esc(g)}">`
+  ).join("");
+
+  const chosen = $("#genre").value;
+
+  $("#chips").innerHTML = ["Todos",...gs].map((g,i) => {
+    const value = i ? g : "";
+    return `
+      <button
+        class="chip ${chosen === value ? "active" : ""}"
+        data-genre="${esc(value)}">
+        ${esc(g)}
+      </button>`;
+  }).join("");
+
+  const query = $("#search").value
+    .toLocaleLowerCase("es");
+
+  const visible = books.filter(b => {
+    const matchesGenre =
+      !chosen ||
+      (b["Género / tema"] || "Sin género") === chosen;
+
+    const matchesText = [
+      b["Título"],
+      b["Autor/a"],
+      b["Género / tema"],
+      b["Ubicación"]
+    ].join(" ")
+      .toLocaleLowerCase("es")
+      .includes(query);
+
+    return matchesGenre && matchesText;
+  });
+
+  const sortField = {
+    title:"Título",
+    author:"Autor/a",
+    genre:"Género / tema"
+  }[$("#sort").value] || "Título";
+
+  visible.sort((a,b) =>
+    String(a[sortField] || "").localeCompare(
+      String(b[sortField] || ""),
+      "es"
+    )
+  );
+
+  $("#grid").innerHTML = visible.length
+    ? gs.filter(g => !chosen || g === chosen).map(g => {
+        const arr = visible.filter(
+          b => (b["Género / tema"] || "Sin género") === g
+        );
+
+        if (!arr.length) return "";
+
+        const colors =
+          palette[gs.indexOf(g) % palette.length];
+
+        return `
+          <details class="genre"
+            style="--a:${colors[0]};--b:${colors[1]}"
+            ${chosen || query ? "open" : ""}>
+            <summary>
+              📚 ${esc(g)}
+              <small>${arr.length} libros · Toca para desplegar</small>
+            </summary>
+            <div class="grid">
+              ${arr.map(b => renderBookCard(b,g,colors)).join("")}
+            </div>
+          </details>`;
+      }).join("")
+    : '<div class="panel">No hay libros para mostrar.</div>';
+}
+
+function renderBookCard(book, genre, colors) {
+  const portada = String(book["Portada URL"] || "");
+  const validCover = /^https:\/\//i.test(portada);
+
+  const cover = validCover
+    ? `<img src="${esc(portada)}" alt="Portada de ${esc(book["Título"])}" loading="lazy">`
+    : esc(book["Título"]);
+
+  return `
+    <article class="book">
+      <div class="cover" style="--a:${colors[0]}">
+        ${cover}
+      </div>
+      <div class="info">
+        <span class="tag">${esc(genre)}</span>
+        <h3>${esc(book["Título"])}</h3>
+        <p>${esc(book["Autor/a"] || "Autor desconocido")}</p>
+        <p class="review">${esc(book["Reseña"] || "")}</p>
+        <p class="hint">
+          📍 ${esc(book["Ubicación"] || "Sin ubicación")}
+        </p>
+        <div class="bottom">
+          <span class="muted">
+            ${esc(book["Estado lectura"] || "")}
+          </span>
+          <div>
+            <button class="small" data-edit="${esc(book._id)}">
+              Editar
+            </button>
+            <button class="small" data-delete="${esc(book._id)}">
+              ×
+            </button>
+          </div>
+        </div>
+      </div>
+    </article>`;
+}
+
+// SELECTORES DE LIBROS
+function fillBookSelectors() {
+  const ids = [
+    "readBook",
+    "quoteBook",
+    "opBook",
+    "loanBook"
+  ];
+
+  const sorted = [...books].sort((a,b) =>
+    a["Título"].localeCompare(b["Título"],"es")
+  );
+
+  for (const id of ids) {
+    const select = $("#" + id);
+    const previous = select.value;
+
+    select.innerHTML =
+      '<option value="">Seleccionar libro...</option>' +
+      sorted.map(b =>
+        `<option value="${esc(b._id)}">
+          ${esc(b["Título"])}
+        </option>`
+      ).join("");
+
+    if (sorted.some(b => b._id === previous)) {
+      select.value = previous;
+    }
+  }
+}
+
+// ESTADÍSTICAS Y CURIOSIDADES
+function renderStats() {
+  const gs = genres();
+  const genreCounts = gs.map(g => ({
+    name:g,
+    count:books.filter(
+      b => (b["Género / tema"] || "Sin género") === g
+    ).length
+  })).sort((a,b) => b.count - a.count);
+
+  const authorCounts = {};
+
+  for (const book of books) {
+    const author = book["Autor/a"] || "Sin autor";
+    authorCounts[author] = (authorCounts[author] || 0) + 1;
+  }
+
+  const authors = Object.entries(authorCounts)
+    .sort((a,b) => b[1] - a[1]);
+
+  const completed = myReadings().filter(
+    r => r.state === "Leído"
+  );
+
+  const year = new Date().getFullYear();
+
+  const completedYear = completed.filter(
+    r => String(r.end || "").startsWith(String(year))
+  );
+
+  const total = books.length;
+
+  const genreBars = genreCounts.slice(0,10).map(g => {
+    const percentage = total
+      ? Math.round(g.count / total * 100)
+      : 0;
+
+    return `
+      <div class="bar">
+        <label title="${esc(g.name)}">${esc(g.name)}</label>
+        <div class="progress">
+          <span style="width:${percentage}%"></span>
+        </div>
+        <b>${g.count}</b>
+      </div>`;
+  }).join("");
+
+  const unreadCount = books.filter(
+    b => !completed.some(r => r.bookId === b._id)
+  ).length;
+
+  $("#statsContent").innerHTML = `
+    <div class="stats">
+      <div class="stat">Libros<b>${total}</b></div>
+      <div class="stat">Géneros<b>${gs.length}</b></div>
+      <div class="stat">Leídos por mí<b>${completed.length}</b></div>
+      <div class="stat">Leídos este año<b>${completedYear.length}</b></div>
+    </div>
+
+    <div class="two">
+      <div class="panel">
+        <h3>📚 Géneros predominantes</h3>
+        ${genreBars || "<p>Sin información.</p>"}
+      </div>
+
+      <div class="panel">
+        <h3>✨ Curiosidades</h3>
+        <p><b>Autor más repetido:</b>
+          ${esc(authors[0]?.[0] || "Sin datos")}
+        </p>
+        <p><b>Libros de ese autor:</b>
+          ${authors[0]?.[1] || 0}
+        </p>
+        <p><b>Género predominante:</b>
+          ${esc(genreCounts[0]?.name || "Sin datos")}
+        </p>
+        <p><b>Libros que aún no termino:</b>
+          ${unreadCount}
+        </p>
+        <p><b>Libros prestados actualmente:</b>
+          ${loans.filter(l => !l.returned).length}
+        </p>
+        <p><b>Libros en lista de deseos:</b>
+          ${wishes.length}
+        </p>
+      </div>
+    </div>`;
+}
+
+// ACTUALIZACIÓN GENERAL DE PANTALLA
+function render() {
+  if (!ready) return;
+
+  renderCatalog();
+  fillBookSelectors();
+  renderStats();
+
+  // Las funciones siguientes se completan
+  // en la Parte 3.
+  renderReading();
+  renderQuotes();
+  renderOpinions();
+  renderLoans();
+  renderWishes();
+  renderChallenge();
+}
+
+/* =========================================
+   NUESTRABIBLIO - PARTE 3
+   FUNCIONES Y SINCRONIZACIÓN FIREBASE
+========================================= */
+
+// UTILIDADES
+
+const collectionRef = name => collection(db, name);
+
+const recordRef = (name, id) => doc(db, name, id);
+
+const userId = () => auth.currentUser?.uid || "";
+
+const userEmail = () => auth.currentUser?.email || "";
+
+const recordId = () => crypto.randomUUID();
+
+const today = () => chileDate();
+
+function requireReady() {
+  if (!ready || !auth.currentUser) {
+    alert("Espera a que termine la sincronización.");
+    return false;
+  }
+  return true;
+}
+
+function bookOptions() {
+  return [...books].sort((a,b) =>
+    a["Título"].localeCompare(b["Título"], "es")
+  );
+}
+
+function showError(error) {
+  console.error(error);
+  alert("Ocurrió un error: " + error.message);
+}
+
+async function saveRecord(name, id, data) {
+  await setDoc(recordRef(name, id), {
+    ...data,
+    updatedAt: serverTimestamp()
+  }, {merge:true});
+}
+
+async function removeRecord(name, id) {
+  await deleteDoc(recordRef(name, id));
+}
+
+// INICIO Y CIERRE DE SESIÓN
+
+$("#login").onclick = async () => {
+  try {
+    await signInWithEmailAndPassword(
+      auth,
+      $("#email").value.trim(),
+      $("#password").value
+    );
+    $("#password").value = "";
+  } catch(error) {
+    $("#authMsg").textContent =
+      "Error al iniciar sesión: " + error.message;
+  }
+};
+
+$("#logout").onclick = async () => {
+  try {
+    await signOut(auth);
+  } catch(error) {
+    showError(error);
+  }
+};
+
+function stopListeners() {
+  unsubscribe.forEach(fn => fn());
+  unsubscribe = [];
+}
+
+function subscribe(name, callback) {
+  const stop = onSnapshot(
+    collectionRef(name),
+    snapshot => {
+      const data = snapshot.docs.map(d => ({
+        ...d.data(),
+        _id:d.id
+      }));
+      callback(data);
+      if (ready) render();
+    },
+    error => {
+      console.error("Firebase " + name, error);
+      status("Error de sincronización: " + name, "err");
+    }
+  );
+
+  unsubscribe.push(stop);
+}
+
+onAuthStateChanged(auth, user => {
+  stopListeners();
+
+  currentUser = user;
+  ready = false;
+
+  books = [];
+  readings = [];
+  quotes = [];
+  opinions = [];
+  loans = [];
+  wishes = [];
+  goals = [];
+
+  $("#loginArea").classList.toggle("hidden", !!user);
+  $("#sessionArea").classList.toggle("hidden", !user);
+  $("#appArea").classList.toggle("hidden", !user);
+
+  $("#userLabel").textContent = user?.email || "";
+  $("#authMsg").textContent = user
+    ? "Sesión iniciada correctamente."
+    : "";
+
+  if (!user) return;
+
+  status("Conectando...");
+
+  // Mantiene la colección original.
+  subscribe("libros", data => {
+    books = data;
+    ready = true;
+    status("Sincronizado · " + books.length + " libros", "ok");
+    dailyBook();
+    render();
+  });
+
+  // Colecciones adicionales.
+  subscribe("lecturas", data => {
+    readings = data;
+  });
+
+  subscribe("frases", data => {
+    quotes = data;
+  });
+
+  subscribe("opiniones", data => {
+    opinions = data;
+  });
+
+  subscribe("prestamos", data => {
+    loans = data;
+  });
+
+  subscribe("deseos", data => {
+    wishes = data;
+  });
+
+  subscribe("metas", data => {
+    goals = data;
+  });
 });
-}
 
-onAuthStateChanged(auth,user=>{
-$("#loginArea").classList.toggle("hidden",!!user);
-$("#sessionArea").classList.toggle("hidden",!user);
-$("#appArea").classList.toggle("hidden",!user);
-$("#userLabel").textContent=user?.email||"";
-$("#authMsg").textContent=user?"Sesión iniciada correctamente.":"";
-if(user)listen();
-else{
-if(unsubscribe){unsubscribe();unsubscribe=null;}
-books=[];ready=false;
-}
+// FILTROS
+
+$("#chips").onclick = event => {
+  const button = event.target.closest("[data-genre]");
+  if (!button) return;
+
+  $("#genre").value = button.dataset.genre;
+  renderCatalog();
+};
+
+["search","genre","sort"].forEach(id => {
+  $("#" + id).addEventListener(
+    id === "search" ? "input" : "change",
+    renderCatalog
+  );
 });
 
-$("#login").onclick=async()=>{
-try{
-await signInWithEmailAndPassword(auth,$("#email").value.trim(),$("#password").value);
-$("#password").value="";
-}catch(e){$("#authMsg").textContent="Error al iniciar sesión: "+e.message;}
-};
-$("#logout").onclick=()=>signOut(auth);
+// FORMULARIO DE LIBROS
 
-$("#chips").onclick=e=>{
-const el=e.target.closest("[data-genre]");
-if(el){$("#genre").value=el.dataset.genre;render();}
-};
-["search","genre","sort"].forEach(id=>
-$("#"+id).addEventListener(id==="search"?"input":"change",render));
+function openForm(id = null) {
+  editing = id;
+  $("#form").reset();
 
-function openForm(id=null){
-editing=id;
-$("#form").reset();
-$("#formTitle").textContent=id?"Editar libro":"Agregar libro";
-if(id){
-const b=books.find(x=>x._id===id);
-if(!b)return;
-for(const el of $("#form").elements)
-if(el.name)el.value=b[el.name]||"";
-}
-$("#dialog").showModal();
-}
-$("#new").onclick=()=>{
-if(!ready)return alert("Espera la sincronización.");
-openForm();
-};
-$("#cancel").onclick=()=>$("#dialog").close();
+  $("#formTitle").textContent = id
+    ? "Editar libro"
+    : "Agregar libro";
 
-$("#grid").onclick=async e=>{
-const edit=e.target.closest("[data-edit]");
-const del=e.target.closest("[data-delete]");
-if(edit)openForm(edit.dataset.edit);
-if(del&&ready&&confirm("¿Eliminar este libro del catálogo compartido?")){
-try{await deleteDoc(bookRef(del.dataset.delete));}
-catch(err){alert("Error: "+err.message);}
-}
-};
+  if (id) {
+    const book = books.find(b => b._id === id);
+    if (!book) return;
 
-$("#form").onsubmit=async e=>{
-e.preventDefault();
-if(!ready)return;
-const old=editing?books.find(b=>b._id===editing):null;
-const obj=norm(old||{});
-for(const [k,v] of new FormData(e.target))obj[k]=String(v).trim();
-obj.Reseña=(obj.Reseña||"").slice(0,60);
-if(!obj["Título"])return;
-const id=editing||newId();
-if(!editing)obj.ID="LIB-"+String(Date.now()).slice(-9);
-$("#saveBook").disabled=true;
-try{
-await setDoc(bookRef(id),{
-...obj,updatedAt:serverTimestamp(),
-updatedBy:auth.currentUser.email
-},{merge:true});
-$("#dialog").close();
-}catch(err){alert("No se pudo guardar: "+err.message);}
-finally{$("#saveBook").disabled=false;}
-};
+    for (const element of $("#form").elements) {
+      if (element.name) {
+        element.value = book[element.name] || "";
+      }
+    }
+  }
 
-$("#export").onclick=()=>{
-if(!ready)return alert("Primero inicia sesión.");
-if(!window.XLSX)return alert("No se pudo cargar Excel.");
-const wb=XLSX.utils.book_new();
-XLSX.utils.book_append_sheet(wb,
-XLSX.utils.json_to_sheet(books.map(norm),{header:fields}),"Catálogo");
-XLSX.writeFile(wb,"NuestraBiblio_Respaldo.xlsx");
-};
-
-function excelBook(row){
-const o={};
-for(const [k,v] of Object.entries(row)){
-const n=k.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
-const f=fields.find(x=>x.toLowerCase().normalize("NFD")
-.replace(/[\u0300-\u036f]/g,"")===n);
-const dest=n==="titulo"?"Título":
-n==="autor"?"Autor/a":
-n.startsWith("genero")?"Género / tema":f||k;
-o[dest]=String(v??"").trim();
-}
-return norm(o);
+  $("#dialog").showModal();
 }
 
-$("#upload").onchange=async e=>{
-const file=e.target.files[0];
-if(!file)return;
-try{
-if(!ready)throw Error("Espera la sincronización.");
-if(!window.XLSX)throw Error("No se pudo cargar Excel.");
-const wb=XLSX.read(await file.arrayBuffer(),{type:"array"});
-const sheet=wb.SheetNames.find(n=>n.toLowerCase().includes("cat"))||wb.SheetNames[0];
-const incoming=XLSX.utils.sheet_to_json(wb.Sheets[sheet],{defval:""})
-.map(excelBook).filter(b=>b["Título"]);
-const known=new Set(books.map(key));
-const additions=[];
-for(const b of incoming){
-const k=key(b);
-if(!known.has(k)){known.add(k);additions.push(b);}
+$("#new").onclick = () => {
+  if (!requireReady()) return;
+  openForm();
+};
+
+$("#cancel").onclick = () => $("#dialog").close();
+
+$("#grid").onclick = async event => {
+  const edit = event.target.closest("[data-edit]");
+  const del = event.target.closest("[data-delete]");
+
+  if (edit) {
+    openForm(edit.dataset.edit);
+    return;
+  }
+
+  if (del && requireReady()) {
+    if (!confirm("¿Eliminar este libro del catálogo compartido?")) {
+      return;
+    }
+
+    try {
+      await removeRecord("libros", del.dataset.delete);
+    } catch(error) {
+      showError(error);
+    }
+  }
+};
+
+$("#form").onsubmit = async event => {
+  event.preventDefault();
+  if (!requireReady()) return;
+
+  const old = editing
+    ? books.find(b => b._id === editing)
+    : null;
+
+  const book = norm(old || {});
+
+  for (const [name,value] of new FormData(event.target)) {
+    book[name] = String(value).trim();
+  }
+
+  book.Reseña = (book.Reseña || "").slice(0,60);
+
+  if (!book["Título"]) {
+    alert("Debes ingresar un título.");
+    return;
+  }
+
+  // Detectar duplicados sin bloquear la edición.
+  const duplicate = books.find(b =>
+    b._id !== editing &&
+    key(b) === key(book)
+  );
+
+  if (duplicate) {
+    const proceed = confirm(
+      "Este título y autor ya existen en tu biblioteca.\n\n" +
+      "¿Quieres guardar igualmente otro ejemplar?"
+    );
+    if (!proceed) return;
+  }
+
+  const id = editing || newId();
+
+  if (!editing) {
+    book.ID = "LIB-" + String(Date.now()).slice(-9);
+  }
+
+  $("#saveBook").disabled = true;
+
+  try {
+    await saveRecord("libros", id, {
+      ...book,
+      updatedBy:userEmail()
+    });
+
+    $("#dialog").close();
+  } catch(error) {
+    showError(error);
+  } finally {
+    $("#saveBook").disabled = false;
+  }
+};
+
+// EXPORTAR EXCEL
+
+$("#export").onclick = () => {
+  if (!requireReady()) return;
+
+  if (!window.XLSX) {
+    alert("No se pudo cargar la biblioteca Excel.");
+    return;
+  }
+
+  const workbook = XLSX.utils.book_new();
+
+  const sheet = XLSX.utils.json_to_sheet(
+    books.map(norm),
+    {header:fields}
+  );
+
+  XLSX.utils.book_append_sheet(
+    workbook,
+    sheet,
+    "Catálogo"
+  );
+
+  XLSX.writeFile(
+    workbook,
+    "NuestraBiblio_Respaldo.xlsx"
+  );
+};
+
+// IMPORTAR EXCEL
+
+function excelBook(row) {
+  const result = {};
+
+  for (const [original,value] of Object.entries(row)) {
+    const name = original.toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g,"")
+      .trim();
+
+    const field = fields.find(f =>
+      f.toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"") === name
+    );
+
+    const destination =
+      name === "titulo" ? "Título" :
+      name === "autor" ? "Autor/a" :
+      name.startsWith("genero") ? "Género / tema" :
+      field || original;
+
+    result[destination] = String(value ?? "").trim();
+  }
+
+  return norm(result);
 }
-if(!additions.length)return alert("No hay libros nuevos.");
-if(!confirm(`¿Agregar ${additions.length} libros sin borrar los actuales?`))return;
-for(let i=0;i<additions.length;i+=400){
-const batch=writeBatch(db);
-for(const b of additions.slice(i,i+400)){
-batch.set(bookRef(newId()),{
-...b,updatedAt:serverTimestamp(),
-updatedBy:auth.currentUser.email
+
+$("#upload").onchange = async event => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  try {
+    if (!requireReady()) return;
+    if (!window.XLSX) throw Error("Excel no disponible.");
+
+    const workbook = XLSX.read(
+      await file.arrayBuffer(),
+      {type:"array"}
+    );
+
+    const sheetName = workbook.SheetNames.find(
+      n => n.toLowerCase().includes("cat")
+    ) || workbook.SheetNames[0];
+
+    const incoming = XLSX.utils.sheet_to_json(
+      workbook.Sheets[sheetName],
+      {defval:""}
+    ).map(excelBook).filter(b => b["Título"]);
+
+    const known = new Set(books.map(key));
+    const additions = [];
+
+    for (const book of incoming) {
+      const k = key(book);
+
+      if (!known.has(k)) {
+        known.add(k);
+        additions.push(book);
+      }
+    }
+
+    if (!additions.length) {
+      alert("No hay libros nuevos para importar.");
+      return;
+    }
+
+    if (!confirm(
+      "¿Agregar " + additions.length +
+      " libros sin borrar los existentes?"
+    )) return;
+
+    for (let i = 0; i < additions.length; i += 400) {
+      const batch = writeBatch(db);
+
+      for (const book of additions.slice(i,i+400)) {
+        batch.set(bookRef(newId()), {
+          ...book,
+          updatedAt:serverTimestamp(),
+          updatedBy:userEmail()
+        });
+      }
+
+      await batch.commit();
+    }
+
+    alert("Importación completada correctamente.");
+  } catch(error) {
+    showError(error);
+  } finally {
+    event.target.value = "";
+  }
+};
+
+// MI RINCÓN DE LECTURA
+
+function renderReading() {
+  const mine = myReadings();
+
+  $("#readingList").innerHTML = mine.length
+    ? mine.map(r => {
+        const total = Number(r.total) || 0;
+        const page = Number(r.page) || 0;
+        const percent = total
+          ? Math.min(100,Math.round(page / total * 100))
+          : (r.state === "Leído" ? 100 : 0);
+
+        return `
+          <div class="listitem">
+            <h3>${esc(bookName(r.bookId))}</h3>
+            <p>${esc(r.state)}</p>
+            <div class="progress">
+              <span style="width:${percent}%"></span>
+            </div>
+            <p class="hint">
+              ${page} / ${total} páginas · ${percent}%
+            </p>
+            <button class="small" data-loadreading="${esc(r.bookId)}">
+              Editar progreso
+            </button>
+            <button class="small" data-delreading="${esc(r._id)}">
+              Eliminar
+            </button>
+          </div>`;
+      }).join("")
+    : '<p class="muted">Todavía no registras lecturas.</p>';
+}
+
+$("#readBook").onchange = () => {
+  const record = myReadings().find(
+    r => r.bookId === $("#readBook").value
+  );
+
+  $("#readState").value = record?.state || "Pendiente";
+  $("#readPage").value = record?.page || 0;
+  $("#readTotal").value = record?.total || 0;
+  $("#readStart").value = record?.start || "";
+  $("#readEnd").value = record?.end || "";
+};
+
+$("#saveReading").onclick = async () => {
+  if (!requireReady()) return;
+
+  const bookId = $("#readBook").value;
+  if (!bookId) return alert("Selecciona un libro.");
+
+  const old = myReadings().find(r => r.bookId === bookId);
+  const id = old?._id || recordId();
+
+  const state = $("#readState").value;
+  const end = $("#readEnd").value ||
+    (state === "Leído" ? today() : "");
+
+  try {
+    await saveRecord("lecturas", id, {
+      uid:userId(),
+      email:userEmail(),
+      bookId,
+      state,
+      page:Number($("#readPage").value) || 0,
+      total:Number($("#readTotal").value) || 0,
+      start:$("#readStart").value,
+      end
+    });
+
+    alert("Progreso guardado.");
+  } catch(error) {
+    showError(error);
+  }
+};
+
+$("#readingList").onclick = async event => {
+  const load = event.target.closest("[data-loadreading]");
+  const del = event.target.closest("[data-delreading]");
+
+  if (load) {
+    $("#readBook").value = load.dataset.loadreading;
+    $("#readBook").dispatchEvent(new Event("change"));
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+
+  if (del && confirm("¿Eliminar este progreso?")) {
+    const record = myReadings().find(
+      r => r._id === del.dataset.delreading
+    );
+    if (!record) return;
+
+    try {
+      await removeRecord("lecturas", record._id);
+    } catch(error) {
+      showError(error);
+    }
+  }
+};
+
+// DESAFÍO LECTOR FAMILIAR
+
+function renderChallenge() {
+  const year = new Date().getFullYear();
+  const mine = myGoal();
+
+  if (mine) $("#goal").value = mine.target;
+
+  const members = [...new Map(
+    goals.filter(g => String(g.year) === String(year))
+      .map(g => [g.uid,g])
+  ).values()];
+
+  $("#challenge").innerHTML = members.length
+    ? members.map(g => {
+        const count = readings.filter(r =>
+          r.uid === g.uid &&
+          r.state === "Leído" &&
+          String(r.end || "").startsWith(String(year))
+        ).length;
+
+        const target = Number(g.target) || 12;
+        const percentage = Math.min(
+          100,
+          Math.round(count / target * 100)
+        );
+
+        return `
+          <div class="listitem">
+            <b>${esc(g.email || "Integrante")}</b>
+            <p>${count} de ${target} libros terminados</p>
+            <div class="progress">
+              <span style="width:${percentage}%"></span>
+            </div>
+            <p>${percentage}% de la meta</p>
+          </div>`;
+      }).join("")
+    : '<p class="muted">Aún no hay metas registradas.</p>';
+}
+
+$("#saveGoal").onclick = async () => {
+  if (!requireReady()) return;
+
+  const target = Number($("#goal").value);
+
+  if (!Number.isInteger(target) || target < 1) {
+    return alert("Ingresa una meta válida.");
+  }
+
+  const year = new Date().getFullYear();
+  const id = userId() + "_" + year;
+
+  try {
+    await saveRecord("metas", id, {
+      uid:userId(),
+      email:userEmail(),
+      year,
+      target
+    });
+
+    alert("Meta anual guardada.");
+  } catch(error) {
+    showError(error);
+  }
+};
+
+// FRASES FAVORITAS
+
+function renderQuotes() {
+  $("#quoteList").innerHTML = myQuotes().length
+    ? myQuotes().map(q => `
+      <div class="listitem">
+        <h3>${esc(bookName(q.bookId))}</h3>
+        <blockquote>“${esc(q.text)}”</blockquote>
+        <p class="hint">Página: ${esc(q.page || "No indicada")}</p>
+        <p>${esc(q.note || "")}</p>
+        <button class="small" data-delquote="${esc(q._id)}">
+          Eliminar frase
+        </button>
+      </div>
+    `).join("")
+    : '<p class="muted">Todavía no guardas frases.</p>';
+}
+
+$("#saveQuote").onclick = async () => {
+  if (!requireReady()) return;
+
+  const bookId = $("#quoteBook").value;
+  const text = $("#quoteText").value.trim();
+
+  if (!bookId || !text) {
+    return alert("Selecciona un libro y escribe una frase.");
+  }
+
+  try {
+    await saveRecord("frases", recordId(), {
+      uid:userId(),
+      email:userEmail(),
+      bookId,
+      text,
+      page:$("#quotePage").value.trim(),
+      note:$("#quoteNote").value.trim()
+    });
+
+    $("#quoteText").value = "";
+    $("#quotePage").value = "";
+    $("#quoteNote").value = "";
+    alert("Frase guardada.");
+  } catch(error) {
+    showError(error);
+  }
+};
+
+$("#quoteList").onclick = async event => {
+  const button = event.target.closest("[data-delquote]");
+  if (!button) return;
+
+  const record = myQuotes().find(
+    q => q._id === button.dataset.delquote
+  );
+
+  if (!record || !confirm("¿Eliminar esta frase?")) return;
+
+  try {
+    await removeRecord("frases", record._id);
+  } catch(error) {
+    showError(error);
+  }
+};
+
+// OPINIONES PERSONALES
+
+function renderOpinions() {
+  $("#opinionList").innerHTML = opinions.length
+    ? opinions.map(o => `
+      <div class="listitem">
+        <h3>${esc(bookName(o.bookId))}</h3>
+        <p><b>${esc(o.email || "Lector")}</b></p>
+        <p>${"⭐".repeat(Math.max(0,Math.min(5,Number(o.rating)||0)))}</p>
+        <p>${esc(o.text || "")}</p>
+        ${o.uid === userId()
+          ? `<button class="small" data-delop="${esc(o._id)}">
+              Eliminar mi opinión
+            </button>`
+          : ""}
+      </div>
+    `).join("")
+    : '<p class="muted">Todavía no hay opiniones.</p>';
+}
+
+$("#saveOpinion").onclick = async () => {
+  if (!requireReady()) return;
+
+  const bookId = $("#opBook").value;
+  if (!bookId) return alert("Selecciona un libro.");
+
+  const old = myOpinions().find(o => o.bookId === bookId);
+
+  try {
+    await saveRecord("opiniones", old?._id || recordId(), {
+      uid:userId(),
+      email:userEmail(),
+      bookId,
+      rating:$("#opRating").value,
+      text:$("#opText").value.trim()
+    });
+
+    alert("Opinión guardada.");
+  } catch(error) {
+    showError(error);
+  }
+};
+
+$("#opinionList").onclick = async event => {
+  const button = event.target.closest("[data-delop]");
+  if (!button) return;
+
+  const record = myOpinions().find(
+    o => o._id === button.dataset.delop
+  );
+
+  if (!record || !confirm("¿Eliminar tu opinión?")) return;
+
+  try {
+    await removeRecord("opiniones", record._id);
+  } catch(error) {
+    showError(error);
+  }
+};
+
+// REGISTRO DE PRÉSTAMOS
+
+function renderLoans() {
+  $("#loanList").innerHTML = loans.length
+    ? loans.map(l => `
+      <div class="listitem">
+        <h3>${esc(bookName(l.bookId))}</h3>
+        <p>Prestado a: <b>${esc(l.to || "")}</b></p>
+        <p>Fecha: ${esc(l.date || "")}</p>
+        <p>Devolución prevista: ${esc(l.due || "")}</p>
+        <p>${l.returned ? "✅ Devuelto" : "📖 Prestado"}</p>
+        ${!l.returned
+          ? `<button class="small" data-return="${esc(l._id)}">
+              Marcar como devuelto
+            </button>`
+          : ""}
+        <button class="small" data-delloan="${esc(l._id)}">
+          Eliminar registro
+        </button>
+      </div>
+    `).join("")
+    : '<p class="muted">No hay préstamos registrados.</p>';
+}
+
+$("#saveLoan").onclick = async () => {
+  if (!requireReady()) return;
+
+  const bookId = $("#loanBook").value;
+  const to = $("#loanTo").value.trim();
+
+  if (!bookId || !to) {
+    return alert("Selecciona el libro y la persona.");
+  }
+
+  try {
+    await saveRecord("prestamos", recordId(), {
+      bookId,
+      to,
+      date:$("#loanDate").value || today(),
+      due:$("#loanDue").value,
+      returned:false,
+      createdBy:userId()
+    });
+
+    $("#loanTo").value = "";
+    $("#loanDue").value = "";
+    alert("Préstamo registrado.");
+  } catch(error) {
+    showError(error);
+  }
+};
+
+$("#loanList").onclick = async event => {
+  const ret = event.target.closest("[data-return]");
+  const del = event.target.closest("[data-delloan]");
+
+  try {
+    if (ret) {
+      await saveRecord("prestamos", ret.dataset.return, {
+        returned:true,
+        returnedAt:today()
+      });
+    }
+
+    if (del && confirm("¿Eliminar este préstamo?")) {
+      await removeRecord("prestamos", del.dataset.delloan);
+    }
+  } catch(error) {
+    showError(error);
+  }
+};
+
+// LISTA DE DESEOS
+
+function renderWishes() {
+  $("#wishList").innerHTML = wishes.length
+    ? wishes.map(w => `
+      <div class="listitem">
+        <h3>${esc(w.title || "")}</h3>
+        <p>${esc(w.author || "")}</p>
+        <p class="muted">${esc(w.note || "")}</p>
+        <button class="small" data-delwish="${esc(w._id)}">
+          Eliminar de deseos
+        </button>
+      </div>
+    `).join("")
+    : '<p class="muted">No hay libros en la lista de deseos.</p>';
+}
+
+$("#saveWish").onclick = async () => {
+  if (!requireReady()) return;
+
+  const title = $("#wishTitle").value.trim();
+
+  if (!title) {
+    return alert("Ingresa el título del libro.");
+  }
+
+  const author = $("#wishAuthor").value.trim();
+
+  const duplicate = wishes.some(w =>
+    (w.title || "").toLocaleLowerCase("es") ===
+      title.toLocaleLowerCase("es") &&
+    (w.author || "").toLocaleLowerCase("es") ===
+      author.toLocaleLowerCase("es")
+  );
+
+  if (duplicate) {
+    return alert("Este libro ya está en la lista de deseos.");
+  }
+
+  try {
+    await saveRecord("deseos", recordId(), {
+      title,
+      author,
+      note:$("#wishNote").value.trim(),
+      createdBy:userId()
+    });
+
+    $("#wishTitle").value = "";
+    $("#wishAuthor").value = "";
+    $("#wishNote").value = "";
+    alert("Libro agregado a deseos.");
+  } catch(error) {
+    showError(error);
+  }
+};
+
+$("#wishList").onclick = async event => {
+  const button = event.target.closest("[data-delwish]");
+  if (!button || !confirm("¿Eliminar de la lista de deseos?")) {
+    return;
+  }
+
+  try {
+    await removeRecord("deseos", button.dataset.delwish);
+  } catch(error) {
+    showError(error);
+  }
+};
+
+// LIMPIAR CATÁLOGO
+
+$("#clearAll").onclick = async () => {
+  if (!requireReady()) return;
+
+  if (!books.length) {
+    return alert("El catálogo ya está vacío.");
+  }
+
+  const count = books.length;
+
+  if (!confirm(
+    "ATENCIÓN: eliminarás " + count +
+    " libros del catálogo compartido.\n\n" +
+    "Esta operación afectará a ambos usuarios.\n" +
+    "No eliminará las otras colecciones.\n\n" +
+    "Descarga primero un respaldo Excel.\n\n" +
+    "¿Quieres continuar?"
+  )) return;
+
+  const phrase = prompt(
+    "CONFIRMACIÓN FINAL\n\n" +
+    "Escribe exactamente BORRAR TODO."
+  );
+
+  if (phrase !== "BORRAR TODO") {
+    return alert("Operación cancelada.");
+  }
+
+  const button = $("#clearAll");
+  button.disabled = true;
+
+  try {
+    const ids = books.map(b => b._id);
+
+    for (let i = 0; i < ids.length; i += 400) {
+      const batch = writeBatch(db);
+
+      for (const id of ids.slice(i,i+400)) {
+        batch.delete(bookRef(id));
+      }
+
+      await batch.commit();
+    }
+
+    alert("Catálogo eliminado correctamente.");
+  } catch(error) {
+    showError(error);
+  } finally {
+    button.disabled = false;
+  }
+};
+
+// ACTUALIZAR LIBRO DESTACADO AL REGRESAR
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && ready) dailyBook();
 });
-}
-await batch.commit();
-}
-alert("Importación completada.");
-}catch(err){alert("Error de importación: "+err.message);}
-finally{e.target.value="";}
-};
 
-$("#clearAll").onclick=async()=>{
-if(!ready||!auth.currentUser)return alert("Inicia sesión primero.");
-if(!books.length)return alert("La base de datos ya está vacía.");
-const count=books.length;
-if(!confirm(
-`ATENCIÓN: vas a borrar ${count} libros de Firebase para ambos usuarios.
-
-Esta acción no se puede deshacer desde la aplicación.
-
-Descarga antes un respaldo Excel.
-
-¿Quieres continuar?`
-))return;
-
-const phrase=prompt(
-`CONFIRMACIÓN FINAL
-
-Escribe exactamente BORRAR TODO para eliminar ${count} libros.`
-);
-if(phrase!=="BORRAR TODO"){
-alert("Operación cancelada. No se borraron libros.");
-return;
-}
-const button=$("#clearAll");
-button.disabled=true;
-try{
-const ids=books.map(b=>b._id);
-for(let i=0;i<ids.length;i+=400){
-const batch=writeBatch(db);
-for(const id of ids.slice(i,i+400))batch.delete(bookRef(id));
-await batch.commit();
-}
-alert("Los libros fueron eliminados de Firebase.");
-}catch(err){
-alert("La limpieza se interrumpió: "+err.message+
-". Comprueba los registros restantes antes de reintentar.");
-}finally{button.disabled=false;}
-};
-
-document.addEventListener("visibilitychange",()=>{
-if(!document.hidden&&ready)dailyBook();
+window.addEventListener("focus", () => {
+  if (ready) dailyBook();
 });
-window.addEventListener("focus",()=>{
-if(ready)dailyBook();
-});
+
 </script>
 </body>
 </html>
