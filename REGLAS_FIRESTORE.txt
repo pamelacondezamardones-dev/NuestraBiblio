@@ -1,25 +1,95 @@
-REGLAS DE FIRESTORE PARA NUESTRABIBLIO
-
-Estas reglas deben coincidir con la colección `libros` que utiliza index.html.
-Si ya publicaste estas mismas reglas con los UID reales, NO necesitas cambiarlas.
-
-Sustituye UID_PAMELA y UID_CLAUDIO por los identificadores de Authentication > Usuarios.
-No pegues contraseñas. No publiques tus UID reales en GitHub.
 
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /libros/{libroId} {
-      allow read, write: if request.auth != null
-        && request.auth.uid in [
-          'UID_PAMELA',
-          'UID_CLAUDIO'
+
+    // Usuarios autorizados de NuestraBiblio
+    function autorizado() {
+      return request.auth != null &&
+        request.auth.uid in [
+          'tISgQLVocgaWYqEPzCJW3FwNg4n1',
+          'jje69QZwcEdkZ0YuQj7fW2fXLto2'
         ];
     }
-    match /{document=**} {
-      allow read, write: if false;
+
+    function propietario() {
+      return autorizado() &&
+        resource.data.uid == request.auth.uid;
     }
+
+    function nuevoPropietario() {
+      return autorizado() &&
+        request.resource.data.uid == request.auth.uid;
+    }
+
+    function conservaPropietario() {
+      return request.resource.data.uid ==
+        resource.data.uid;
+    }
+
+    // 1. Catálogo familiar
+    match /libros/{libroId} {
+      allow read, create, update, delete:
+        if autorizado();
+    }
+
+    // 2. Lecturas personales
+    match /lecturas/{lecturaId} {
+      allow read, delete: if propietario();
+
+      allow create: if nuevoPropietario();
+
+      allow update: if propietario() &&
+        conservaPropietario();
+    }
+
+    // 3. Frases personales
+    match /frases/{fraseId} {
+      allow read, delete: if propietario();
+
+      allow create: if nuevoPropietario();
+
+      allow update: if propietario() &&
+        conservaPropietario();
+    }
+
+    // 4. Opiniones compartidas
+    match /opiniones/{opinionId} {
+      allow read: if autorizado();
+
+      allow create: if nuevoPropietario();
+
+      allow update: if propietario() &&
+        conservaPropietario();
+
+      allow delete: if propietario();
+    }
+
+    // 5. Préstamos compartidos
+    match /prestamos/{prestamoId} {
+      allow read, create, update, delete:
+        if autorizado();
+    }
+
+    // 6. Lista familiar de deseos
+    match /deseos/{deseoId} {
+      allow read, create, update, delete:
+        if autorizado();
+    }
+
+    // 7. Metas familiares
+    match /metas/{metaId} {
+      allow read: if autorizado();
+
+      allow create: if nuevoPropietario();
+
+      allow update: if propietario() &&
+        conservaPropietario();
+
+      allow delete: if propietario();
+    }
+
+    // Todo lo demás queda denegado.
   }
 }
-
-Firebase Console > Firestore > Reglas > Publicar.
